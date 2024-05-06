@@ -1,0 +1,17 @@
+The Little Library App
+
+Purpose: I'm in a book club that meets once a month. When finances are tight, I don't necessarily want to keep buying books, and sometimes the book of the month has a long wait at the library.  I've noticed that a lot of little libraries have been popping up around my neighborhood (take a book leave a book concept).  I had a thought that it would be useful if there was a way to keep track of the inventory in these little libraries.  The idea of the Little Library app is to serve two purposes: 1). It gives a way for users to find a particular book.  They can search for the book they want withing a certain geological radious, and the app will tell them of the little libraries that have the book.  2).  Users and owners of the libraries can adjust the inventory at particular library.  Users can "check-in" and "check-out" books at a particular library, and owners can adjust the list of books to make sure the inventory is current.  
+
+Basic functions of the app:
+user login with name and password
+	admins- owner of the library
+	normal users - those who take and leave books
+Main menu: 
+1. Find a book- the user can use the app to search for a particular book. The app will return locations of the libraries that have the book
+2. Check out a book- User can select a book from a location's inventory and check it out.  This will remove the book from that location's inventory
+3. Check in a book- When a user adds a book to the library, they can add it to the location's inventory in the app.  
+4. Update inventory (admin only)- this will allow owners to adjust their library inventory accordingly (in case users fail to add/remove books)
+
+Nice to have (if time allows)
+5. Library Location Search- users can do a general search to find libraries near them.  They can browse the inventory of returned libraries to find any books of interest. 
+6. Library Registration (admin only)- allows owners to register their library on the app along with the current inventory
