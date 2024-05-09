@@ -1,0 +1,94 @@
+Two Models: Books and Locations
+
+Book Model
+
+Class Book
+
+Properties:
+public int Id { get; set; }
+public string Title { get; set; }
+public string Author { get; set; }
+public bool Fiction { get; set; }
+
+Constructors: 
+public Book()
+{
+	Title = "";
+}
+
+public Book(int id, string title, string author, bool fiction)
+{
+
+	Id = id;
+	Title = title;
+	Author = author;
+	Fiction = fiction;
+}
+
+public override string ToString()
+{
+	return "{'ID':" + Id
+	+ ", 'Title':"
+	+ Title + " ,Author:"
+	+ Author + ",Fiction: "
+	+ Fiction + "}";
+
+Other Possible Methods:
+Find a book - returns libraries that have a certain book
+Add a Book- adds a book to a library
+Remove a book - removes a book from a library
+
+
+Location Model
+
+Class Location
+
+Properties
+public int ID { get; set; }
+public string FirstName { get; set; }
+public string LastName { get; set; }
+public string StreetAddress { get; set; }
+public string City { get; set; }
+public string State { get; set; }
+public string (???) PostalCode { get; set; }
+public string EmailAddress { get; set; }
+
+
+***for Location class- should these properties be encapsulated for regular users?   If logged in as the owner of the libary, then they can have {get; set;}?
+
+Constructors
+public Location()
+{
+	PostalCode = "";
+}
+
+public Location(int id, string firstName, string lastName, string streetAddress, string city, string state, string postcalCode, string emailAddress)
+{
+	Id = id;
+	FirstName = firstName;
+	LastName = lastName;
+	StreetAddress = streetAddress
+	City = city;
+	State = State;
+	PostalCode = postalCode;
+	EmailAddress = emailAddress;
+}
+
+public override string ToString()
+{
+	return "{'id':' + Id
+	+ ", 'First Name':"
+	+ FirstName + ", 'Last Name':"
+	+ LastName + ", 'Address':"
+	+ StreetAddress + ", 'City':"
+	+ City + ", 'State':"
+	+ State + ", 'Zip Code':"
+	+ PostalCode + ", 'Email Address':"
+	+ EmailAddress + "}";
+}
+
+Other Methods
+Find a Library- retruns libararies within a search radious (nice to have)
+Register a Library- allows admin of library to add their library to search radius
+
+
