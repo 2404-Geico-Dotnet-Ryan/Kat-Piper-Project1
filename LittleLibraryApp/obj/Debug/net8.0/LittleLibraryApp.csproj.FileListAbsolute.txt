@@ -1,0 +1,15 @@
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\bin\Debug\net8.0\LittleLibraryApp.exe
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\bin\Debug\net8.0\LittleLibraryApp.deps.json
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\bin\Debug\net8.0\LittleLibraryApp.runtimeconfig.json
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\bin\Debug\net8.0\LittleLibraryApp.dll
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\bin\Debug\net8.0\LittleLibraryApp.pdb
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.AssemblyInfoInputs.cache
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.AssemblyInfo.cs
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.csproj.CoreCompileInputs.cache
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.sourcelink.json
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.dll
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\refint\LittleLibraryApp.dll
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.pdb
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\LittleLibraryApp.genruntimeconfig.cache
+C:\Users\U1J482\Revature\TestProject\Kat-Piper-Project1\LittleLibraryApp\obj\Debug\net8.0\ref\LittleLibraryApp.dll

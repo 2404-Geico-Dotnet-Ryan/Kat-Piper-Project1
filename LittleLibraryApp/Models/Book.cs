@@ -8,6 +8,7 @@ public bool Fiction { get; set; }
 public Book()
 {
     Title = "";
+	Author = "";
 }
 
 

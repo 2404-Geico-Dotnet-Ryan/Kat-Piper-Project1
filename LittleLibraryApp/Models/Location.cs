@@ -12,7 +12,13 @@ public string EmailAddress { get; set; }
 
 public Location()
 {
+	FirstName = "";
+	LastName = "";
+	StreetAddress = "";
+	City = "";
+	State = "";
 	PostalCode = "";
+	EmailAddress = "";
 }
 public Location(int id, string firstName, string lastName, string streetAddress, string city, string state, string postalCode, string emailAddress)
 {
