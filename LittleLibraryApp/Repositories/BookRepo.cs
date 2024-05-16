@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 class BookRepo
 {
     /*
@@ -34,10 +36,44 @@ public Book? GetBook(int id)
     }
     else
     {
+        //need to adjust this.  If id can't be found, then book does not exist at library.  See loop in main program- need to adjust that too
+        System.Console.WriteLine("Invalid Book ID, please enter a book ID");
         return null;
     }
 }
+public Book? UpdateBook(Book updatedBook)
+{
+    //assuming ID is consistent with an ID that exists
+    //just have to update value (Book) for key (ID) within dictionary
+    try
+    {
+    bookStorage.books[updatedBook.Id] = updatedBook;
+    return updatedBook;//confirms storage has been updated w/ info sent back to user
+    }
+    catch(Exception)
+    {
+        System.Console.WriteLine("Invalid Book ID - Please try again");
+        return null;
+    }
+    
+}
 
+public Book? DeleteBook(Book b)
+{
+        //if have the ID-> remove book from storage
+        bool didRemove = bookStorage.books.Remove(b.Id);
+
+        if (didRemove)
+        {
+            return b;
+        }
+    
+        else
+        {
+            System.Console.WriteLine("Invalid Book ID - Please Try Again");
+            return null;
+        }
+}
 
 
 }

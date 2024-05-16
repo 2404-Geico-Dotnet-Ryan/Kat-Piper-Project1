@@ -16,11 +16,11 @@ LocationStorage locationStorage = new();
 
 public Location AddLocation(Location l)
 {
-    //movie being added needs correct id
+    //location being added needs correct id
     //assume it doesn't and force it to by using idCounter
     l.Id = locationStorage.idCounter++;//increments value aftwards to prep for next time it's needed
 
-    //add book into collection
+    //add location into collection
     locationStorage.locations.Add(l.Id, l);
     return l;
 }
@@ -29,7 +29,7 @@ public Location? GetLocation(int id)
 {
     if(locationStorage.locations.ContainsKey(id))
     {
-        Location selectedLocation = locationStorage.locations[id]; //uses id to find and retrieve entire book
+        Location selectedLocation = locationStorage.locations[id]; //uses id to find and retrieve entire locations
         return selectedLocation;
     }
     else
@@ -37,6 +37,41 @@ public Location? GetLocation(int id)
         return null;
     }
 }
+public Location? UpdateLocation(Location updatedLocation)
+{
+    //assuming ID is consistent with an ID that exists
+    //just have to update value (Book) for key (ID) within dictionary
+    try
+    {
+    locationStorage.locations[updatedLocation.Id] = updatedLocation;
+    return updatedLocation;//confirms storage has been updated w/ info sent back to user
+    }
+    catch(Exception)
+    {
+        System.Console.WriteLine("Invalid Location ID - Please try again");
+        return null;
+    }
+    
+}
+
+public Location? DeleteLocation(Location l)
+{
+        //if have the ID-> remove book from storage
+        bool didRemove = locationStorage.locations.Remove(l.Id);
+
+        if (didRemove)
+        {
+            return l;
+        }
+    
+        else
+        {
+            System.Console.WriteLine("Invalid Location ID - Please Try Again");
+            return null;
+        }
+}
+
+
 
 
 
