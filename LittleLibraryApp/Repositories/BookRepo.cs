@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 class BookRepo
 {
@@ -18,7 +19,7 @@ BookStorage bookStorage = new();
 
 public Book AddBook(Book b)
 {
-    //movie being added needs correct id
+    //book being added needs correct id
     //assume it doesn't and force it to by using idCounter
     b.Id = bookStorage.idCounter++;//increments value aftwards to prep for next time it's needed
 
@@ -40,7 +41,14 @@ public Book? GetBook(int id)
         System.Console.WriteLine("Invalid Book ID, please enter a book ID");
         return null;
     }
+
 }
+//method to return all books
+public List<Book> GetAllBooks()
+{
+    return bookStorage.books.Values.ToList();
+}
+
 public Book? UpdateBook(Book updatedBook)
 {
     //assuming ID is consistent with an ID that exists

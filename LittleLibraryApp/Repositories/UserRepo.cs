@@ -8,7 +8,7 @@ class UserRepo
         userStorage.users.Add(u.Id, u);
         return u;
     }
-    public User GetUser(int id)
+    public User? GetUser(int id)
     {
         if(userStorage.users.ContainsKey(id))
         {
@@ -26,23 +26,22 @@ class UserRepo
     {
          return userStorage.users.Values.ToList();
     }
-    public User UpdateUser(User updatedUser)
+    public User? UpdateUser(User updatedUser)
     {
            try 
         {
             userStorage.users[updatedUser.Id] = updatedUser;
         
-            //choose to send updated movie back as a "response-feedback" system
-            //conveys that i've updated the storage with this movie I send back to you
+            
             return updatedUser;
         }
-        catch(Exception e)
+        catch(Exception )
         {
             System.Console.WriteLine("Invalid User ID - Please Try Again");
             return null;
         }
     }
-    public User DeleteUser(User u)
+    public User? DeleteUser(User u)
     {
          bool didRemove = userStorage.users.Remove(u.Id);
         if (didRemove)

@@ -37,6 +37,12 @@ public Location? GetLocation(int id)
         return null;
     }
 }
+
+
+public List<Location> GetAllLocations()
+{
+    return locationStorage.locations.Values.ToList();
+}
 public Location? UpdateLocation(Location updatedLocation)
 {
     //assuming ID is consistent with an ID that exists
