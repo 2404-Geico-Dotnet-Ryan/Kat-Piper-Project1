@@ -5,7 +5,7 @@ class UserStorage
 
     public UserStorage()
     {
-        User user1 = new(idCounter, "ryan", "pass", "user"); idCounter++;
+        User user1 = new(idCounter, "Kat", "pass", "user"); idCounter++;
         User user2 = new(idCounter, "jonathan", "pass2", "user"); idCounter++;
         User user3 = new(idCounter, "admin", "pass3", "admin"); idCounter++;
 
