@@ -1,16 +1,31 @@
 ﻿
 
 
+
 class Program
 {
-    static BookService bs = new();
-    static LocationService ls = new();
+    static BookService bs;
+    static LocationService ls;
     static User? currentUser = null;
-    static UserService us = new();
+    static UserService us;
     static void Main(string[] args)
     {
-        InitMenu();
+       string path = @"C:\Users\U1J482\OneDrive - Government Employees Insurance Company\Desktop\library-app-db.txt";
+       string connectionString = File.ReadAllText(path);
+
        
+       BookRepo br = new(connectionString);
+       bs = new(br);
+       UserRepo ur = new(connectionString);
+       us = new(ur);
+       LocationRepo lr = new(connectionString);
+       ls = new(lr);
+            
+       
+       
+       
+       
+        InitMenu();     
 
 
 
@@ -28,12 +43,33 @@ class Program
             System.Console.WriteLine("(1) Log in");
             System.Console.WriteLine("(2) Register");
             System.Console.WriteLine("(0) Exit");
+            try
+            {
+                int input = int.Parse(Console.ReadLine() ?? "0");
+                input = ValidateCmd(input, 2);
+                keepGoing = DecideInitOption(input);
+            }
+            catch (FormatException)
+            {
+                System.Console.WriteLine("Invalid format- please enter a number");
+            }         
+             
 
-            int input = int.Parse(Console.ReadLine() ?? "0");
-
-            keepGoing = DecideInitOption(input);
+            
 
         }
+    }
+
+    private static int ValidateCmd(int cmd, int maxOption)
+    {
+          while (cmd < 0 || cmd > maxOption )
+        {
+            System.Console.WriteLine("Invalid Command - Please Enter a command 1-" + maxOption + "; or 0 to Quit");
+            cmd = int.Parse(Console.ReadLine() ?? "0");
+        }
+
+        //if input was already valid - it skips the if statement and just returns the value.
+        return cmd;
     }
 
     private static void AdminMenu()
@@ -129,10 +165,7 @@ class Program
             return false;
 
        }
-        if(currentUser?.Role == "admin")
-        AdminMenu();
-        else
-        MainMenu();
+        
        return true;
     }
 
@@ -167,6 +200,11 @@ class Program
             if (currentUser == null)
                 System.Console.WriteLine("Login failed.  Please try again");
         }
+        //once logged in, send to main menu
+        if(currentUser?.Role == "admin")
+        AdminMenu(); //menu for those logged in as admin
+        else
+        MainMenu(); //menu for regular users
     }
 
     private static bool DecideNextOption(int input)
@@ -217,7 +255,7 @@ class Program
         //gets all locations in storage
         List<Location> locations = ls.GetAllLocations();
         //Displays list of all locations
-        System.Console.WriteLine("Here are all of the locations containing your book");
+        System.Console.WriteLine("Here are all of the libraries that have the book you're looking for");
         foreach(Location l in locations)
         {
             System.Console.WriteLine(l);
@@ -273,7 +311,7 @@ class Program
         //have to make assumption that user knows what id works
 
         //Code to handle input validation
-        Location? retrievedLocation = null;
+        Location retrievedLocation = new Location();
         while (retrievedLocation == null)
         {
             System.Console.WriteLine("Please enter location ID:");
@@ -314,7 +352,7 @@ class Program
         //not going to ask for id- book repo AddBook()gives next correct value for id
         //collect info into new Book Object
         //enter arguments for constructor
-        Book book = new(0, title, author, true, null);
+        Book book = new(0, title, author, true, 0);
 
         //use BookRepo to add new book into data storage
         book = bs.AddNewBook(book); //using book variable to store updated values from AddBook() process

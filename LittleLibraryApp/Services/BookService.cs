@@ -7,7 +7,11 @@ class BookService
         - View list of books
 
     */
-    BookRepo br = new();
+    BookRepo br;
+     public BookService(BookRepo br)
+    {
+        this.br = br;
+    }
     public List<Book> GetAvailableBooks()
     {
         //Get all books

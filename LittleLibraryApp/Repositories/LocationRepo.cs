@@ -1,3 +1,5 @@
+using Microsoft.Data.SqlClient;
+
 class LocationRepo
 {
     /*
@@ -12,73 +14,218 @@ class LocationRepo
     D- Delete (removal of book objects)
 
     */
-LocationStorage locationStorage = new();
+private readonly string _connectionString;
+    //Dependency Injection -> Constructor Injection
+    public LocationRepo(string connString)
+    {
+        _connectionString = connString;
+    }
+
 
 public Location AddLocation(Location l)
 {
-    //location being added needs correct id
-    //assume it doesn't and force it to by using idCounter
-    l.Id = locationStorage.idCounter++;//increments value aftwards to prep for next time it's needed
+    //Set up DB connection  
+      using SqlConnection  connection = new(_connectionString);
+      connection.Open();  
+      //Create the SQL string  
+      string sql = "INSERT INTO dbo.Locations OUTPUT inserted.* VALUES (@FirstName, @LastName, @StreetAddress, @City, @State, @PostalCode, @EmailAddress)";
+      //set up SqlCommand Object and use its methods to modify the Parameterized values
+      using SqlCommand cmd = new(sql, connection);
+      cmd.Parameters.AddWithValue("@FirstName", l.FirstName);
+      cmd.Parameters.AddWithValue("@LastName", l.LastName);
+      cmd.Parameters.AddWithValue("@StreetAddress", l.StreetAddress);
+      cmd.Parameters.AddWithValue("@City", l.City);
+      cmd.Parameters.AddWithValue("@State", l.State);
+      cmd.Parameters.AddWithValue("@PostalCode", l.PostalCode);
+      cmd.Parameters.AddWithValue("@EmailAddress", l.EmailAddress);
 
-    //add location into collection
-    locationStorage.locations.Add(l.Id, l);
-    return l;
+       //Execute the query 
+      //cmd.ExecuteNonQuery();// executes a non-select SQL statement(inserts, updates, deletes)
+      using SqlDataReader reader = cmd.ExecuteReader();
+
+      //Extract the results
+      if(reader.Read())
+      {
+        //if Read() found data, then extract it
+        Location newLibrary = BuildUser(reader);
+
+        return newLibrary;
+
+      }
+     return new Location();
 }
 
-public Location? GetLocation(int id)
+public Location GetLocation(int id)
 {
-    if(locationStorage.locations.ContainsKey(id))
-    {
-        Location selectedLocation = locationStorage.locations[id]; //uses id to find and retrieve entire locations
-        return selectedLocation;
-    }
-    else
-    {
-        return null;
-    }
+     try
+        {
+            //Set up DB Connection
+            using SqlConnection connection = new(_connectionString);
+            connection.Open();
+
+            //Create the SQL String
+            string sql = "SELECT * FROM dbo.Locations WHERE Id = @Id";
+
+            //Set up SqlCommand Object
+            using SqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            //Execute the Query
+            using var reader = cmd.ExecuteReader();
+
+            //Extract the Results
+            if (reader.Read())
+            {
+                //for each iteration -> extract the results to a User object -> add to list.
+                Location newLocation = BuildUser(reader);
+                return newLocation;
+            }
+
+            return new Location(); //Didnt find anyone :(
+
+        }
+        catch (Exception e)
+        {
+            System.Console.WriteLine(e.Message);
+            System.Console.WriteLine(e.StackTrace);
+            return new Location();
+        }
 }
 
 
 public List<Location> GetAllLocations()
 {
-    return locationStorage.locations.Values.ToList();
+     List<Location> locations = new List<Location>();
+        try
+        {
+            //set up DB connection
+            using SqlConnection connection = new(_connectionString);
+            connection.Open();
+            //Create the SQL string
+            string sql = "SELECT * FROM dbo.Locations";
+
+            //Set up SqlCommand Object
+            using SqlCommand cmd = new(sql, connection);
+
+            //Execute the query
+            using var reader = cmd.ExecuteReader(); //flexing options here with use of var
+
+            //Extract the results
+            while(reader.Read())
+            {
+                Location newLocation = BuildUser(reader);
+                //don't return- instead add to list
+                locations.Add(newLocation);
+
+            }
+            return locations;
+        }
+         
+    
+        catch (Exception e)
+        {
+            System.Console.WriteLine(e.Message);
+            System.Console.WriteLine(e.StackTrace);
+            return new List<Location> ();
+        }
 }
-public Location? UpdateLocation(Location updatedLocation)
+public Location UpdateLocation(Location updatedLocation)
 {
-    //assuming ID is consistent with an ID that exists
-    //just have to update value (Book) for key (ID) within dictionary
     try
-    {
-    locationStorage.locations[updatedLocation.Id] = updatedLocation;
-    return updatedLocation;//confirms storage has been updated w/ info sent back to user
-    }
-    catch(Exception)
-    {
-        System.Console.WriteLine("Invalid Location ID - Please try again");
-        return null;
-    }
+        {
+            //Set up DB Connection
+            using SqlConnection connection = new(_connectionString);
+            connection.Open();
+
+            //Create the SQL String
+            string sql = "UPDATE dbo.Locations SET FirstName = @FirstName, LastName = @LastName, StreetAddress = @StreetAddress, City = @City, State = @State, PostalCode = @PostalCode, EmailAddress = @EmailAddress OUTPUT inserted.* WHERE Id = @Id";
+
+            //Set up SqlCommand Object
+            using SqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@Id", updatedLocation.Id);
+            cmd.Parameters.AddWithValue("@FirstName", updatedLocation.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", updatedLocation.LastName);
+            cmd.Parameters.AddWithValue("@StreetAddress", updatedLocation.StreetAddress);
+            cmd.Parameters.AddWithValue("@City", updatedLocation.City);
+            cmd.Parameters.AddWithValue("@State", updatedLocation.State);
+            cmd.Parameters.AddWithValue("@PostalCode", updatedLocation.PostalCode);
+            cmd.Parameters.AddWithValue("@EmailAddress", updatedLocation.EmailAddress);
+
+            //Execute the Query
+            using var reader = cmd.ExecuteReader();
+
+            //Extract the Results
+            if (reader.Read())
+            {
+                //for each iteration -> extract the results to a User object -> add to list.
+                Location newLocation = BuildUser(reader);
+                return newLocation;
+            }
+
+            return new Location(); //Didnt find anyone :(
+
+        }
+        catch (Exception e)
+        {
+            System.Console.WriteLine(e.Message);
+            System.Console.WriteLine(e.StackTrace);
+            return new Location();
+        }
     
 }
 
-public Location? DeleteLocation(Location l)
+public Location DeleteLocation(Location l)
 {
         //if have the ID-> remove book from storage
-        bool didRemove = locationStorage.locations.Remove(l.Id);
+      try
+        {
+            //Set up DB Connection
+            using SqlConnection connection = new(_connectionString);
+            connection.Open();
 
-        if (didRemove)
-        {
-            return l;
+            //Create the SQL String
+            string sql = "DELETE FROM dbo.Locations OUTPUT deleted.* WHERE Id = @Id";
+
+            //Set up SqlCommand Object
+            using SqlCommand cmd = new(sql, connection);
+            cmd.Parameters.AddWithValue("@Id", l.Id);
+
+            //Execute the Query
+            using var reader = cmd.ExecuteReader();
+
+            //Extract the Results
+            if (reader.Read())
+            {
+                //for each iteration -> extract the results to a User object -> add to list.
+                Location newLocation = BuildUser(reader);
+                return newLocation;
+            }
+
+            return new Location(); //Didnt find anyone :(
+
         }
-    
-        else
+        catch (Exception e)
         {
-            System.Console.WriteLine("Invalid Location ID - Please Try Again");
-            return null;
+            System.Console.WriteLine(e.Message);
+            System.Console.WriteLine(e.StackTrace);
+            return new Location();
         }
 }
+ private static Location BuildUser(SqlDataReader reader)
+    {
+        //for each iteration -> extract the results to a user object -> add to list
+        Location newLocation = new();
+        newLocation.Id = (int)reader["Id"];
+        newLocation.FirstName = (string)reader["FirstName"];
+        newLocation.LastName = (string)reader["LastName"];
+        newLocation.StreetAddress = (string)reader["StreetAddress"];
+        newLocation.City = (string)reader["City"];
+        newLocation.State = (string)reader["State"];
+        newLocation.PostalCode = (string)reader["PostalCode"];
+        newLocation.EmailAddress = (string)reader["EmailAddress"];
 
+        return newLocation;
+    }
 
-
-
-
+   
 }

@@ -1,7 +1,14 @@
+
 class LocationService
 {
 
-LocationRepo lr = new();
+
+LocationRepo lr; 
+
+public LocationService(LocationRepo lr)
+{
+    this.lr = lr;
+}
 
 public List<Location> GetAllLocations()
 {
@@ -22,7 +29,7 @@ public Location ChangeLocation(Location l)
     return l;
 
 }
-public Location? GetLocation(int id)
+public Location GetLocation(int id)
 {
     return lr.GetLocation(id);
     

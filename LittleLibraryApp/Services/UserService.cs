@@ -1,6 +1,10 @@
 class UserService
 {
-    UserRepo ur = new();
+    UserRepo ur;
+    public UserService(UserRepo ur)
+    {
+        this.ur = ur;
+    }
 
     //Register
     public User? RegisterUser(User u)
@@ -15,7 +19,7 @@ class UserService
 
         //let's not let them register if username is already taken
         //Get all users
-        List<User> allUsers = ur.GetAllUsers();
+        List<User> allUsers = ur.GetAllUsers()??[];
         foreach(User user in allUsers)
         {
             if(user.Username == u.Username)
@@ -35,7 +39,7 @@ class UserService
     public User? LogInUser(string username, string password)
     {
         //Get all users
-        List<User> allUsers = ur.GetAllUsers();
+        List<User> allUsers = ur.GetAllUsers()??[];
 
         //check each one to see if we find a match
         foreach (User user in allUsers)

@@ -5,16 +5,16 @@ public string Title { get; set; }
 public string Author { get; set; }
 public bool Fiction { get; set; }
 
-public Location? Library { get; set; }
+public int Library { get; set; }
 public Book()
 {
     Title = "";
 	Author = "";
-	Library = new();
+	
 }
 
 
-public Book(int id, string title, string author, bool fiction, Location? library)
+public Book(int id, string title, string author, bool fiction, int library)
 {
 
 	Id = id;
